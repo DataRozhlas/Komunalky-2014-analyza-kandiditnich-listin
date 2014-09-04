@@ -19,6 +19,7 @@ initObec = (id, nazev) ->
   obce[id] =
     id: id
     nazev: nazev
+    celkem: 0
     ing: 0
     mgr: 0
     mudr: 0
@@ -27,15 +28,17 @@ initObec = (id, nazev) ->
     bez: 0
     jiny: 0
     veky: []
+    zeny: 0
   for i in [0 to 14]
     obce[id]["vek-#i"] = 0
 
 
 hasTitul = (tituly, titul) ->
-  -1 == tituly.indexOf titul
+  -1 !== tituly.indexOf titul
 
 tituly_assoc = {}
-ruzumnyTituly =  <[ing mgr mudr judr rsdr]>
+ruzumnyTituly =  <[ing mgr mudr judr]>
+rsdrs = []
 for line, index in lines
   [ID, obec, poradi, jmeno, prijmeni, titulpred, titulza, vek, povolani, cislo, strana, zkratka, pohlavi] = line.split "\t"
   titulpred .= replace /\./g ''
@@ -53,6 +56,7 @@ for line, index in lines
 
   if not obce[ID] then initObec ID, obec
   obec = obce[ID]
+  obec.celkem++
   titul = titulpred + titulza
   maRozumnyTitul = false
   if titul.length == 0
@@ -65,9 +69,12 @@ for line, index in lines
         maRozumnyTitul = true
     if not maRozumnyTitul
       obec.jiny++
+  if pohlavi[0] == "N"
+    obec.zeny++
   vek = parseInt vek, 10
-  obec["vek-#{groupVek vek}"]++
-  obec['veky'].push vek
+  if vek
+    obec["vek-#{groupVek vek}"]++
+    obec['veky'].push vek
 
 obce = for id, obec of obce
   obec.veky.sort (a, b) -> a - b

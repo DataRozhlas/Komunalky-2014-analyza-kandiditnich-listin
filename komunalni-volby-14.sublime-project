@@ -42,6 +42,7 @@
   "settings":
   {
     "build_on_save": 1,
-    "tab_size": 2
+    "tab_size": 2,
+    "translate_tabs_to_spaces": true,
   }
 }

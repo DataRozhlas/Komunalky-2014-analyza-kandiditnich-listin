@@ -4,12 +4,9 @@ option 'testFile' 'File in (/lib or /test) to run test on' 'FILE'
 option 'currentfile' 'Latest file that triggered the save' 'FILE'
 
 externalScripts =
-  \http://service.ihned.cz/js/d3/v3.3.2.min.js
-  \http://service.ihned.cz/js/tooltip/v1.1.4.d3.min.js
   ...
 
 externalStyles =
-  \http://service.ihned.cz/js/tooltip/v1.1.4.css
   ...
 
 externalData =
@@ -190,10 +187,10 @@ task \build ->
 task \deploy ->
   <~ async.parallel do
     * download-external-scripts
-    download-external-data
-    download-external-styles
-    # build-all-server-scripts!
-    # refresh-manifest!
+      download-external-data
+      download-external-styles
+      # build-all-server-scripts!
+      # refresh-manifest!
   build-styles compression: yes
   <~ build-all-scripts
   <~ combine-scripts compression: yes

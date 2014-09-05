@@ -30,7 +30,7 @@ displayData = (data) ->
   celkem = data[2]
   tituly = data.slice 3, 10
   veky = data.slice 11, 26
-  zeny = data[26]
+  zeny = data[10]
   infoBar.displayData {nazev, celkem, tituly, veky, zeny}
 
 

@@ -12,6 +12,7 @@ window.ig.InfoBar = class InfoBar
     stdMaxVek = maxVek if maxVek > stdMaxVek
     @ageHistogram.style \height (d, i) ->
       "#{vekyRelative[i] / stdMaxVek * 100}%"
+    @genderFiller.style \width "#{zeny / celkem * 100}%"
 
 
   init: (parentElement) ->
@@ -28,3 +29,15 @@ window.ig.InfoBar = class InfoBar
       ..append \div
         ..attr \class \legend
         ..text (d, i) -> vekGroups[i]
+
+    @container.append \h3
+      ..text "Poměr můžu a žen"
+    genderParent = @container.append \div
+      ..attr \class \gender
+      ..append \div
+        ..attr \class \center
+      ..append \div
+        ..attr \class \center-text
+        ..text "50 %"
+    @genderFiller = genderParent.append \div
+      ..attr \class \genderFill

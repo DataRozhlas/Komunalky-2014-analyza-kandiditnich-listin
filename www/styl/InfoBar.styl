@@ -30,13 +30,16 @@
       min-height 1px
       position absolute
       bottom 0px
-    .legend
-      color lighten(black, 40%)
-      font-size 0.7em
-      position absolute
-      left 0px
-      bottom -20px
-      margin-left -6px
+      .legend
+        color lighten(black, 40%)
+        font-size 0.7em
+        position absolute
+        left 0px
+        bottom -20px
+        margin-left -6px
+      &:first-child .legend
+        margin-left -3px
+
     for i in (1 .. 15)
       .field:nth-child({i})
         left ((i - 1) * (100 / 15))%

@@ -4,7 +4,7 @@ document.body.appendChild mapElement
 map = L.map do
   * mapElement
   * minZoom: 6,
-    maxZoom: 13,
+    maxZoom: 12,
     zoom: 8,
     center: [49.78, 15.5]
 
@@ -28,26 +28,39 @@ grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
 
 map.addLayer grid
 # map.addLayer baseLayer
-map.addLayer getLayer \ing 2014
 
-layers = {}
-for l in <[ing meta mgr mudr zeny]>
-  layers[l] = getLayer l
+
+
+layers =
+  * layer: getLayer 'zeny', 2014
+    name: 'Zastoupení žen'
+  * layer: getLayer 'ing', 2014
+    name: 'Inženýři'
+  * layer: getLayer 'mgr', 2014
+    name: 'Magistři'
+  * layer: getLayer 'mudr', 2014
+    name: 'Doktoři'
 
 currentLayer = null
-selectLayer = (mapId) ->
-  selectLayer maps[mapId]
 
-selectLayer = (map) ->
+selectLayer = ({layer}) ->
   if currentLayer
     lastLayer = currentLayer
     setTimeout do
       ->
         map.removeLayer lastLayer.map
       300
-  layer = getLayer map.imagery
+
   map.addLayer layer
   currentLayer :=
     map: layer
 
+selectLayer layers.0
 
+d3.select 'body' .append \select
+  ..attr \class \layerSelector
+  ..selectAll \option .data layers .enter!append \option
+    ..attr \value (d, i) -> i
+    ..html (.name)
+  ..on \change ->
+    selectLayer layers[@value]

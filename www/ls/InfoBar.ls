@@ -1,4 +1,6 @@
 vekGroups = <[18 25 30 35 40 45 50 55 60 65 70 75 80 85 90+]>
+titulClassNames = <[ing mgr mudr judr rsdr jiny bez]>
+titulLegend = [\Ing. \Mgr. \MUDr. \JUDr. \RSDr. \Jiný "Bez titulu"]
 
 window.ig.InfoBar = class InfoBar
   (parentElement) ->
@@ -12,13 +14,18 @@ window.ig.InfoBar = class InfoBar
     stdMaxVek = maxVek if maxVek > stdMaxVek
     @ageHistogram.style \height (d, i) ->
       "#{vekyRelative[i] / stdMaxVek * 100}%"
+    tituly.splice 5, 1
     @genderFiller.style \width "#{zeny / celkem * 100}%"
+    @titulFiller.style \width (d, i) -> "#{tituly[i] / celkem * 100}%"
 
 
   init: (parentElement) ->
     @container = parentElement.append \div
       ..attr \class \infoBar
     @nazev = @container.append \h2
+    @container.append \span
+      ..attr \class \clickInvite
+      ..text "Kliknutím do mapy zobrazíte detail kandidátky"
     @container.append \h3
       ..text "Věkové rozložení"
     histogramParent = @container.append 'div'
@@ -41,3 +48,21 @@ window.ig.InfoBar = class InfoBar
         ..text "50 %"
     @genderFiller = genderParent.append \div
       ..attr \class \genderFill
+
+    @container.append \h3
+      ..text "Tituly"
+    titulParent = @container.append \div
+      ..attr \class \tituly
+
+    @titulFiller = titulParent.selectAll \div.field .data [0 til 6] .enter!append \div
+      ..attr \class (d, i) -> "#{titulClassNames[i]} field"
+
+    @container.append \div
+      .attr \class \titulLegend
+      .selectAll 'div' .data [0 til 7] .enter!append \div
+        ..attr \class \item
+        ..append \span
+          ..attr \class (d, i) -> "#{titulClassNames[i]} legendBg"
+        ..append \span
+          ..attr \class \text
+          ..html (d, i) -> titulLegend[i]

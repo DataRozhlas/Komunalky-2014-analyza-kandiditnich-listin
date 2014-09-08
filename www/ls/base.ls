@@ -37,7 +37,7 @@ displayData = (data) ->
 
 map.addLayer grid
 # map.addLayer baseLayer
-map.addLayer getLayer \zeny 2014
+map.addLayer getLayer \ing 2014
 
 layers = {}
 for l in <[ing meta mgr mudr zeny]>

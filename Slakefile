@@ -13,7 +13,7 @@ externalData =
   style: "#__dirname/www/screen.css"
 
 preferScripts = <[ postInit.js _loadData.js ../data.js init.js _loadExternal.js]>
-deferScripts = <[ base.js ]>
+deferScripts = <[ kandidatka.js base.js ]>
 develOnlyScripts = <[ _loadData.js _loadExternal.js]>
 gzippable = <[ ]>
 build-styles = (options = {}, cb) ->

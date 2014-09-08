@@ -28,10 +28,10 @@ tableHeadings =
     sortable: 1
     filterable: 1
     name: "Povolání"
-  * value: -> if it.pohlavi == 'PRAVDA' then "Muž" else "Žena"
+  * value: -> if it.pohlavi == "PRAVDA" then "Muž" else "Žena"
     filterable: 1
     name: "Pohl."
-  * value: (.zkratka)
+  * value: -> it.zkratka || it.strana
     filterable: 1
     name: "Strana"
 
@@ -40,4 +40,5 @@ window.ig.showKandidatka = (obecId, obecName) ->
   heading.html "Kandidátka obce #obecName"
   tableContainer.html ''
   (err, obec) <~ d3.tsv "../data/obce/#obecId.tsv"
-  new window.ig.DataTable tableContainer, tableHeadings, obec
+  dataTable = new window.ig.DataTable tableContainer, tableHeadings, obec
+    ..on \data (filteredData) -> console.log filteredData.length

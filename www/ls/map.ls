@@ -23,9 +23,8 @@ baseLayer = L.tileLayer do
 grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
   ..on \mouseover ({data}:e) ->
     window.ig.displayData data
-
-
-
+  ..on \click ({data}) ->
+    window.ig.showKandidatka ...data
 
 map.addLayer grid
 # map.addLayer baseLayer

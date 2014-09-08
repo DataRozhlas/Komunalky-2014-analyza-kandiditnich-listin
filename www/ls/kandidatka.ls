@@ -41,4 +41,42 @@ window.ig.showKandidatka = (obecId, obecName) ->
   tableContainer.html ''
   (err, obec) <~ d3.tsv "../data/obce/#obecId.tsv"
   dataTable = new window.ig.DataTable tableContainer, tableHeadings, obec
-    ..on \data (filteredData) -> console.log filteredData.length
+    ..on \data (filteredData) ->
+      displaySubset obecName, filteredData.map (.data)
+
+displaySubset = (obecName, data) ->
+  nazev = obecName
+  veky = [0 to 14].map -> 0
+  zeny = 0
+  tituly = [0 to 6].map -> 0
+  ruzumnyTituly = <[ing mgr mudr judr rsdr]>
+  celkem = data.length
+  for datum in data
+    vekGroup = groupVek parseInt datum.vek, 10
+    if datum.pohlavi != 'PRAVDA'
+      zeny++
+    titul = (datum.titulpred + datum.titulza).toLowerCase!
+    maRozumnyTitul = false
+    if titul.length == 0
+      tituly[5]++
+    else
+      for rozumnyTitul, titulIndex in ruzumnyTituly
+        if hasTitul titul, rozumnyTitul
+          if rozumnyTitul == 'mvdr' then rozumnyTitul = 'mudr'
+          tituly[titulIndex]++
+          maRozumnyTitul = true
+      if not maRozumnyTitul
+        tituly[6]++
+    veky[vekGroup]++
+  window.ig.infoBar.displayData {nazev, celkem, tituly, veky, zeny}
+
+hasTitul = (tituly, titul) ->
+  -1 != tituly.indexOf titul
+
+groupVek = (vek) ->
+  if vek <= 25
+    return 0
+  if vek > 95
+    return 14
+  vek -= 25
+  Math.ceil vek / 5

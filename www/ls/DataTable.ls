@@ -51,14 +51,15 @@ window.ig.DataTable = class DataTable
 
   transformData: (input) ->
     input.map (inputLine) ~>
-      @headerFields.map (headerField) ~>
+      out = @headerFields.map (headerField) ~>
         out = {}
-          ..data = inputLine
           ..value = headerField.value inputLine
         out.sortable = switch typeof! headerField.sortable
           | \Function => headerField.sortable inputLine
           | otherwise => out.value
         out
+      out.data = inputLine
+      out
 
   sortBy: (fieldIndex) ->
     if fieldIndex != @currentSort.fieldIndex

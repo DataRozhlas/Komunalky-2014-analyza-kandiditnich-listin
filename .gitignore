@@ -5,6 +5,8 @@
 /node_modules
 /lib
 /data/tiles
+/data/obce
+/data/shp
 /srv/publisher.ls
 /www/screen.css
 /www/external.css

@@ -49,7 +49,7 @@ displaySubset = (obecName, data) ->
   veky = [0 to 14].map -> 0
   zeny = 0
   tituly = [0 to 6].map -> 0
-  ruzumnyTituly = <[ing mgr mudr judr rsdr]>
+  ruzumnyTituly = <[ing mgr mudr judr]>
   celkem = data.length
   for datum in data
     vekGroup = groupVek parseInt datum.vek, 10

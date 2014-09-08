@@ -3,11 +3,13 @@ window.ig.infoBar = new ig.InfoBar d3.select \body
 window.ig.displayData = (data) ->
   nazev = data[1]
   celkem = data[2]
-  tituly = data.slice 3, 10
-  veky = data.slice 11, 26
-  zeny = data[10]
-  window.ig.infoBar.displayData {nazev, celkem, tituly, veky, zeny}
-# window.ig.displayData [588024,"Telč - Staré Město",168,23,16,2,1,0,111,15,42,15,11,15,10,30,18,22,14,15,12,5,1,0,0,0,46]
+  tituly = data.slice 3, 9
+  veky = data.slice 9, 24
+  zeny = data[25]
+  obyvatel = data[26]
+  mandaty = data[27]
+  window.ig.infoBar.displayData {nazev, celkem, tituly, veky, zeny, mandaty}
+window.ig.displayData [586846, "Jihlava", 420, 79, 35, 9, 5, 46, 247, 41, 26, 50, 47, 57, 40, 40, 48, 37, 22, 8, 3, 1, 0, 0, 45, 116, 50510, 37]
 
 # <~ setTimeout _, 600
 # window.ig.showKandidatka 588024,"Telč - Staré Město"

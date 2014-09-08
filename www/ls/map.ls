@@ -32,6 +32,8 @@ map.addLayer grid
 
 
 layers =
+  * layer: getLayer 'tlacenka', 2014
+    name: 'Kandidátů na mandát'
   * layer: getLayer 'zeny', 2014
     name: 'Zastoupení žen'
   * layer: getLayer 'ing', 2014

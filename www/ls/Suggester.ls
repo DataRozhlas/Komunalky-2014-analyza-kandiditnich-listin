@@ -74,8 +74,8 @@ window.Suggester = class Suggester
       ..attr \data-id (.id)
       ..on \click @~onInputSubmitted
       ..on \touchstart @~onInputSubmitted
-      ..on \mouseover (item, index) ~>
-        @currentSuggestionsIndex = index
+      ..on \mouseover (item) ~>
+        @currentSuggestionsIndex = @currentSuggestions.indexOf item
         @refreshCurrentSelection!
       ..html ->
           """<span class='obec'>#{it.nazev},

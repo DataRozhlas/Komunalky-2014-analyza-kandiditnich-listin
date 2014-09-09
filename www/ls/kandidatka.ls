@@ -30,7 +30,7 @@ tableHeadings =
     name: "Povolání"
   * value: -> if it.pohlavi == "PRAVDA" then "Muž" else "Žena"
     filterable: 1
-    name: "Pohl."
+    name: "Pohlaví"
   * value: -> it.zkratka || it.strana
     filterable: 1
     name: "Strana"

@@ -101,7 +101,7 @@ window.Suggester = class Suggester
     cb null, filtered
 
   downloadSuggestions: (cb) ->
-    (err, text) <~ d3.text "../data/suggester/okresy_obce.tsv"
+    (err, text) <~ d3.text "/tools/suggester/0.0.1/okresy_obce.tsv"
     [okresy, obce] = text.split "\n\n"
     okresy_assoc = {}
     okresy.split "\n"

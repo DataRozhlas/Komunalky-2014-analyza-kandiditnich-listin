@@ -19,7 +19,7 @@ suggester = new Suggester body
     window.ig.map.setView [obec.lat, obec.lon], 11
     if selectedOutline
       window.ig.map.removeLayer selectedOutline
-    (err, data) <~ d3.json "../data/suggester/geojsons/#{obec.id}.geo.json"
+    (err, data) <~ d3.json "/tools/suggester/0.0.1/geojsons/#{obec.id}.geo.json"
     return unless data
     style =
       fill: no

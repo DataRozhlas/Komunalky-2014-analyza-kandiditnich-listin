@@ -23,9 +23,11 @@ baseLayer = L.tileLayer do
 
 grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
   ..on \mouseover ({data}:e) ->
+    return unless data.2
     window.ig.displayData data
   ..on \click ({data}) ->
     return if not data
+    return unless data.2
     window.ig.showKandidatka ...data
 
 map.addLayer grid

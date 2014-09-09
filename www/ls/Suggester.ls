@@ -87,7 +87,7 @@ window.Suggester = class Suggester
 
   getSuggestions: (value, cb) ->
     value .= toLowerCase!
-    regExp = new RegExp "(^|\\s)" + value, ''
+    regExp = new RegExp "(^|-|\\s)" + value, ''
     filtered = @suggestions.filter ({nazevSearchable}) ->
       regExp.test nazevSearchable
     if filtered.length > 10

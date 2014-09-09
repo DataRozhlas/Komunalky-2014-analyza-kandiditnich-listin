@@ -26,9 +26,6 @@ window.Suggester = class Suggester
     @suggestionList = @container.append \ul
       ..attr \class \suggestionList
 
-    # <~ @downloadSuggestions!
-    # @onValue 'pra'
-
   onInputSubmitted: (item) ->
     if not item
       item = @currentSuggestions[0]

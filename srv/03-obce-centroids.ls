@@ -47,7 +47,7 @@ features = topojson.feature topo, topo.objects."data" .features
   feature.properties = {nazev: feature.properties.NAZMC || feature.properties.NAZOB}
 
   <~ fs.writeFile do
-    "#__dirname/../data/suggester/geojsons/#{id}.geojson"
+    "#__dirname/../data/suggester/geojsons/#{id}.geo.json"
     JSON.stringify {type: 'FeatureCollection', features: [feature]}
   cb null, line
 

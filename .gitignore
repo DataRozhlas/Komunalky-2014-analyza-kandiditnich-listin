@@ -13,6 +13,7 @@
 /www/external.css
 /www/external.js
 /www/js/*
+/www/index.html
 !/www/js/_loadExternal.js
 !/www/js/_loadData.js
 !/www/js/echo.js

@@ -12,8 +12,11 @@ window.ig.InfoBar = class InfoBar
     maxVek = Math.max ...vekyRelative
     stdMaxVek = 0.25
     stdMaxVek = maxVek if maxVek > stdMaxVek
+    tlacenka = (celkem / mandaty).toFixed 2 .replace '.' ','
+
     if mandaty
-      @tlacenka.html ((celkem / mandaty).toFixed 2 .replace '.' ',')
+      @stats.data [celkem, mandaty, tlacenka] .html -> it
+
     @ageHistogram.style \height (d, i) ->
       "#{vekyRelative[i] / stdMaxVek * 100}%"
     tituly.splice 5, 1
@@ -29,11 +32,6 @@ window.ig.InfoBar = class InfoBar
       ..attr \class \clickInvite
       ..text "Kliknutím do mapy zobrazíte detail kandidátky"
     @container.append \h3
-      ..text "Počet kandidátů na jeden mandát"
-    @tlacenka = @container.append \span
-      ..attr \class \tlacenka
-      ..html "-"
-    @container.append \h3
       ..text "Věkové rozložení"
     histogramParent = @container.append 'div'
       ..attr \class \ageHistogram
@@ -45,7 +43,8 @@ window.ig.InfoBar = class InfoBar
         ..text (d, i) -> vekGroups[i]
 
     @container.append \h3
-      ..text "Poměr můžu a žen"
+      ..text "Poměr mužů a žen"
+      ..attr \class \genderH
     genderParent = @container.append \div
       ..attr \class \gender
       ..append \div
@@ -58,6 +57,7 @@ window.ig.InfoBar = class InfoBar
 
     @container.append \h3
       ..text "Tituly"
+      ..attr \class \titulyH
     titulParent = @container.append \div
       ..attr \class \tituly
 
@@ -73,3 +73,19 @@ window.ig.InfoBar = class InfoBar
         ..append \span
           ..attr \class \text
           ..html (d, i) -> titulLegend[i]
+
+    stats = @container.append \div
+      ..attr \class \stats
+      ..append \div
+        ..attr \class \celkem
+        ..append \h4 .html \Kandidátů
+        ..append \span .attr \class \value
+      ..append \div
+        ..attr \class \mandaty
+        ..append \h4 .html \Mandátů
+        ..append \span .attr \class \value
+      ..append \div
+        ..attr \class \tlacenka
+        ..append \h4 .html "Kandidátů na mandát"
+        ..append \span .attr \class \value
+    @stats = stats.selectAll \span.value

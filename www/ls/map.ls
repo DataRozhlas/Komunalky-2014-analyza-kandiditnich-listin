@@ -1,10 +1,10 @@
 mapElement = document.createElement 'div'
   ..id = \map
 document.body.appendChild mapElement
-map = L.map do
+window.ig.map = map = L.map do
   * mapElement
   * minZoom: 6,
-    maxZoom: 12,
+    maxZoom: 11,
     zoom: 8,
     center: [49.78, 15.5]
 

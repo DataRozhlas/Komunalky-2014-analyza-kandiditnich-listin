@@ -1,5 +1,6 @@
 document.body.removeChild document.getElementById 'fallback'
-window.ig.infoBar = new ig.InfoBar d3.select \body
+body = d3.select \body
+window.ig.infoBar = new ig.InfoBar body
 window.ig.displayData = (data) ->
   nazev = data[1]
   celkem = data[2]
@@ -11,5 +12,6 @@ window.ig.displayData = (data) ->
   window.ig.infoBar.displayData {nazev, celkem, tituly, veky, zeny, mandaty}
 window.ig.displayData [586846, "Jihlava", 420, 79, 35, 9, 5, 46, 247, 41, 26, 50, 47, 57, 40, 40, 48, 37, 22, 8, 3, 1, 0, 0, 45, 116, 50510, 37]
 
-# <~ setTimeout _, 600
-# window.ig.showKandidatka 588024,"Telč - Staré Město"
+suggester = new Suggester body
+  ..on 'selected' (obec) ->
+    window.ig.map.setView [obec.lat, obec.lon], 11

@@ -177,11 +177,27 @@ refresh-manifest = (cb) ->
   <~ fs.writeFile "#__dirname/www/manifest.appcache", file
   cb?!
 
+copy-index = ->
+  fs.createReadStream "#__dirname/www/_index.html" .pipe do
+    fs.createWriteStream "#__dirname/www/index.html"
+
+inject-index = (cb) ->
+  files =
+    "#__dirname/www/_index.html"
+    "#__dirname/www/script.js"
+  (err, [index, script]) <~ async.map files, fs.readFile
+  index .= toString!
+  index .= replace '<script src="script.js" charset="utf-8" async></script>', "<script>#{script.toString!}</script>"
+  <~ fs.writeFile "#__dirname/www/index.html", index
+
+  cb?!
+
 task \build ->
   download-external-scripts!
   <~ download-external-styles
   # build-styles compression: no
   <~ build-all-scripts
+  copy-index!
   combine-scripts compression: no
 
 task \deploy ->
@@ -195,13 +211,16 @@ task \deploy ->
   <~ build-all-scripts
   <~ combine-scripts compression: yes
   <~ gzip-files!
+  inject-index!
 
 task \build-styles ->
+  copy-index!
   t0 = Date.now!
   <~ build-styles compression: no
   <~ download-external-data!
 
 task \build-script ({currentfile}) ->
+  copy-index!
   file = relativizeFilename currentfile
   isServer = \src/ == file.substr 0, 4
   isScript = \srv/ == file.substr 0, 4

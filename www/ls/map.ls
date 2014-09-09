@@ -5,8 +5,9 @@ window.ig.map = map = L.map do
   * mapElement
   * minZoom: 6,
     maxZoom: 11,
-    zoom: 8,
+    zoom: 7,
     center: [49.78, 15.5]
+    maxBounds: [[48.4,11.8], [51.2,18.9]]
 
 getLayer = (topic, year) ->
   L.tileLayer do

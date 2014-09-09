@@ -35,15 +35,15 @@ map.addLayer grid
 
 layers =
   * layer: getLayer 'tlacenka', 2014
-    name: 'Kandidátů na mandát'
+    name: 'Počtu kandidátů na mandát'
   * layer: getLayer 'zeny', 2014
     name: 'Zastoupení žen'
   * layer: getLayer 'ing', 2014
-    name: 'Inženýři'
+    name: 'Počtu inženýrů na kandidátce'
   * layer: getLayer 'mgr', 2014
-    name: 'Magistři'
+    name: 'Počtu magistrů na kandidátce'
   * layer: getLayer 'mudr', 2014
-    name: 'Doktoři'
+    name: 'Počtu doktorů na kandidátce'
 
 currentLayer = null
 
@@ -61,10 +61,12 @@ selectLayer = ({layer}) ->
 
 selectLayer layers.0
 
-d3.select 'body' .append \select
+d3.select 'body' .append \div
   ..attr \class \layerSelector
-  ..selectAll \option .data layers .enter!append \option
-    ..attr \value (d, i) -> i
-    ..html (.name)
-  ..on \change ->
-    selectLayer layers[@value]
+      ..append \span .html "Vybarvit mapu podle"
+  ..append \select
+    ..selectAll \option .data layers .enter!append \option
+      ..attr \value (d, i) -> i
+      ..html (.name)
+    ..on \change ->
+      selectLayer layers[@value]

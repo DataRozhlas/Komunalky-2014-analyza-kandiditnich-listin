@@ -14,7 +14,11 @@ window.ig.displayData [586846, "Jihlava", 420, 79, 35, 9, 5, 46, 247, 41, 26, 50
 
 
 selectedOutline = null
-suggester = new Suggester body
+suggesterContainer = body.append \div
+  ..attr \class \suggesterContainer
+  ..append \span .html "Najít obec"
+
+suggester = new Suggester suggesterContainer
   ..on 'selected' (obec) ->
     window.ig.map.setView [obec.lat, obec.lon], 11
     if selectedOutline

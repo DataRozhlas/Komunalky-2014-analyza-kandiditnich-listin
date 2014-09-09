@@ -1,7 +1,14 @@
-.subsetSelector-container
+.suggesterContainer
   position absolute
   bottom 20px
   left 20px
+  border-radius 3px
+  border 2px solid rgba(0,0,0,0.2)
+  padding 6px 10px
+  height 74px
+  background #FFF
+
+.subsetSelector-container
   padding 5px
   width 240px
   input
@@ -10,10 +17,12 @@
     border-radius 3px
     width @width
   ul.suggestionList
+    &:empty
+      display none
     position absolute
-    bottom 30px
+    bottom 38px
     border-bottom 0px none
-    left 0px
+    left 8px
     list-style-type none
     margin 0px
     padding 0px
@@ -36,6 +45,6 @@
     padding 5px 10px
     height 30px
     position absolute
-    left 0px
-    bottom 0px
+    left 8px
+    bottom 8px
 

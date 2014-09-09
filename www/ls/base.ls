@@ -28,5 +28,6 @@ suggester = new Suggester suggesterContainer
     style =
       fill: no
       opacity: 1
+      color: '#000'
     selectedOutline := L.geoJson data, style
       ..addTo window.ig.map

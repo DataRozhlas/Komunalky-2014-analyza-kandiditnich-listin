@@ -8,6 +8,12 @@ window.ig.InfoBar = class InfoBar
 
   displayData: ({nazev, celkem, tituly, veky, zeny, mandaty}) ->
     @nazev.text "#{nazev}"
+    @container.classed \noData celkem == 0
+    if celkem == 0
+      @helpText.html "Vojenský újezd"
+      celkem = 1
+    else
+      @helpText.html "Kliknutím do mapy zobrazíte detail kandidátky"
     vekyRelative = veky.map -> it / celkem
     maxVek = Math.max ...vekyRelative
     stdMaxVek = 0.25
@@ -16,6 +22,8 @@ window.ig.InfoBar = class InfoBar
 
     if mandaty
       @stats.data [celkem, mandaty, tlacenka] .html -> it
+    else
+      @stats.data ['-' '-' '-'] .html -> it
 
     @ageHistogram.style \height (d, i) ->
       "#{vekyRelative[i] / stdMaxVek * 100}%"
@@ -28,7 +36,7 @@ window.ig.InfoBar = class InfoBar
     @container = parentElement.append \div
       ..attr \class \infoBar
     @nazev = @container.append \h2
-    @container.append \span
+    @helpText = @container.append \span
       ..attr \class \clickInvite
       ..text "Kliknutím do mapy zobrazíte detail kandidátky"
     @container.append \h3

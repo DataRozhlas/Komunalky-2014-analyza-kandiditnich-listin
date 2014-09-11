@@ -9,8 +9,7 @@ externalScripts =
 externalStyles =
   ...
 
-externalData =
-  style: "#__dirname/www/screen.css"
+externalData = {}
 
 preferScripts = <[ postInit.js _loadData.js ../data.js init.js _loadExternal.js]>
 deferScripts = <[ kandidatka.js base.js ]>
@@ -64,7 +63,6 @@ download-external-scripts = (cb) ->
 download-external-data = (cb) ->
   console.log "Combining data..."
   files = for key, datafile of externalData => {key, datafile}
-  return cb! unless files.length
   out = {}
   (err) <~ async.each files, ({key, datafile}:file, cb) ->
     (err, data) <~ fs.readFile datafile
@@ -185,9 +183,11 @@ inject-index = (cb) ->
   files =
     "#__dirname/www/_index.html"
     "#__dirname/www/script.js"
-  (err, [index, script]) <~ async.map files, fs.readFile
+    "#__dirname/www/screen.css"
+  (err, [index, script, style]) <~ async.map files, fs.readFile
   index .= toString!
   index .= replace '<script src="script.js" charset="utf-8" async></script>', "<script>#{script.toString!}</script>"
+  index .= replace '<link rel="stylesheet" href="screen.css">', "<style>#{style.toString!}</style>"
   <~ fs.writeFile "#__dirname/www/index.html", index
 
   cb?!
@@ -207,7 +207,7 @@ task \deploy ->
       download-external-styles
       # build-all-server-scripts!
       # refresh-manifest!
-  build-styles compression: yes
+  <~ build-styles compression: yes
   <~ build-all-scripts
   <~ combine-scripts compression: yes
   <~ gzip-files!

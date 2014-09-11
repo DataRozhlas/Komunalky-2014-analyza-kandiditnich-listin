@@ -16,10 +16,15 @@ getLayer = (topic, year) ->
       zIndex: 2
 
 baseLayer = L.tileLayer do
-  * "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+  * "https://samizdat.cz/tiles/ton_b1/{z}/{x}/{y}.png"
+  * zIndex: 1
+    opacity: 1
+    attribution: 'mapová data &copy; přispěvatelé <a target="_blank" href="http://osm.org">OpenStreetMap</a>, obrazový podkres <a target="_blank" href="http://stamen.com">Stamen</a>, <a target="_blank" href="https://samizdat.cz">Samizdat</a>'
+
+labelLayer = L.tileLayer do
+  * "https://samizdat.cz/tiles/ton_l1/{z}/{x}/{y}.png"
   * zIndex: 3
-    opacity: 0.65
-    attribution: 'mapová data &copy; přispěvatelé OpenStreetMap, obrazový podkres <a target="_blank" href="http://ihned.cz">IHNED.cz</a>'
+    opacity: 0.75
 
 grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
   ..on \mouseover ({data}:e) ->
@@ -30,9 +35,19 @@ grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
     window.ig.showKandidatka ...data
 
 map.addLayer grid
-# map.addLayer baseLayer
 
-
+map.on \zoomend ->
+  z = map.getZoom!
+  if z > 9 && !map.hasLayer baseLayer
+    map
+      ..addLayer baseLayer
+      ..addLayer labelLayer
+    layers.forEach (.layer.setOpacity 0.6)
+  else if z <= 9 && map.hasLayer baseLayer
+    map
+      ..removeLayer baseLayer
+      ..removeLayer labelLayer
+    layers.forEach (.layer.setOpacity 1)
 
 layers =
   * layer: getLayer 'tlacenka', 2014

@@ -36,7 +36,7 @@ window.ig.InfoBar = class InfoBar
     @container = parentElement.append \div
       ..attr \class "infoBar noData"
     @nazev = @container.append \h2
-      ..text "Detaily obce"
+      ..text "Analýza kandidátní listiny"
     @helpText = @container.append \span
       ..attr \class \clickInvite
       ..text "Podrobnosti o obci zobrazíte najetím myši nad obec"
@@ -56,6 +56,7 @@ window.ig.InfoBar = class InfoBar
       ..attr \class \genderH
     genderParent = @container.append \div
       ..attr \class \gender
+      ..on \click -> window.ig.selectLayer \zeny
       ..append \div
         ..attr \class \center
       ..append \div
@@ -72,11 +73,13 @@ window.ig.InfoBar = class InfoBar
 
     @titulFiller = titulParent.selectAll \div.field .data [0 til 5] .enter!append \div
       ..attr \class (d, i) -> "#{titulClassNames[i]} field"
+      ..on \click (d, i) -> window.ig.selectLayer titulClassNames[i]
 
     @container.append \div
       .attr \class \titulLegend
       .selectAll 'div' .data [0 til 6] .enter!append \div
         ..attr \class \item
+        ..on \click (d, i) -> window.ig.selectLayer titulClassNames[i]
         ..append \span
           ..attr \class (d, i) -> "#{titulClassNames[i]} legendBg"
         ..append \span

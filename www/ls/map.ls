@@ -74,6 +74,11 @@ selectLayer = ({layer}) ->
   map.addLayer layer
   currentLayer :=
     map: layer
+layers_g = <[tlacenka zeny ing mgr mudr]>
+
+window.ig.selectLayer = (layerId) ->
+  id = layers_g.indexOf layerId
+  selectLayer layers[id] if id != -1
 
 selectLayer layers.0
 

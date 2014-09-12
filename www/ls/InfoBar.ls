@@ -34,11 +34,12 @@ window.ig.InfoBar = class InfoBar
 
   init: (parentElement) ->
     @container = parentElement.append \div
-      ..attr \class \infoBar
+      ..attr \class "infoBar noData"
     @nazev = @container.append \h2
+      ..text "Detaily obce"
     @helpText = @container.append \span
       ..attr \class \clickInvite
-      ..text "Kliknutím do mapy zobrazíte detail kandidátky"
+      ..text "Podrobnosti o obci zobrazíte najetím myši nad obec"
     @container.append \h3
       ..text "Věkové rozložení"
     histogramParent = @container.append 'div'

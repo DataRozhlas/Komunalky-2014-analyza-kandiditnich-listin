@@ -10,7 +10,7 @@ window.ig.displayData = (data) ->
   obyvatel = data[26]
   mandaty = data[27]
   window.ig.infoBar.displayData {nazev, celkem, tituly, veky, zeny, mandaty}
-window.ig.displayData [586846, "Jihlava", 420, 79, 35, 9, 5, 46, 247, 41, 26, 50, 47, 57, 40, 40, 48, 37, 22, 8, 3, 1, 0, 0, 45, 116, 50510, 37]
+# window.ig.displayData [586846, "Jihlava", 420, 79, 35, 9, 5, 46, 247, 41, 26, 50, 47, 57, 40, 40, 48, 37, 22, 8, 3, 1, 0, 0, 45, 116, 50510, 37]
 
 
 selectedOutline = null

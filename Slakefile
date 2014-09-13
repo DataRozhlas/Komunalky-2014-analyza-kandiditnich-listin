@@ -180,6 +180,7 @@ copy-index = ->
     fs.createWriteStream "#__dirname/www/index.html"
 
 inject-index = (cb) ->
+  require! child_process.exec
   files =
     "#__dirname/www/_index.html"
     "#__dirname/www/script.js"
@@ -188,8 +189,10 @@ inject-index = (cb) ->
   index .= toString!
   index .= replace '<script src="script.js" charset="utf-8" async></script>', "<script>#{script.toString!}</script>"
   index .= replace '<link rel="stylesheet" href="screen.css">', "<style>#{style.toString!}</style>"
+  index .= replace /\n/g ''
   <~ fs.writeFile "#__dirname/www/index.html", index
-
+  (err, stdout, stderr) <~ exec 'zopfli www/index.html'
+  console.log err, stderr
   cb?!
 
 task \build ->

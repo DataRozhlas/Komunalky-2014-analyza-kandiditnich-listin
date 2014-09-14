@@ -34,8 +34,6 @@ grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
     return unless data.2
     window.ig.showKandidatka ...data
 
-map.addLayer grid
-
 map.on \zoomend ->
   z = map.getZoom!
   if z > 9 && !map.hasLayer baseLayer
@@ -81,6 +79,9 @@ window.ig.selectLayer = (layerId) ->
   selectLayer layers[id] if id != -1
 
 selectLayer layers.0
+setTimeout do
+  -> map.addLayer grid
+  10
 
 d3.select 'body' .append \div
   ..attr \class \layerSelector

@@ -26,13 +26,19 @@ labelLayer = L.tileLayer do
   * zIndex: 3
     opacity: 0.75
 
+displayedId = null
 grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
   ..on \mouseover ({data}:e) ->
+    displayedId := data?0
     window.ig.displayData data
   ..on \click ({data}) ->
     return unless data
     return unless data.2
-    window.ig.showKandidatka ...data
+    if displayedId == data.0
+      window.ig.showKandidatka ...data
+    else
+      window.ig.displayData data
+      displayedId := data.0
 
 map.on \zoomend ->
   z = map.getZoom!

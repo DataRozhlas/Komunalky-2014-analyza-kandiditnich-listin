@@ -27,7 +27,12 @@ window.ig.InfoBar = class InfoBar
 
     @ageHistogram.style \height (d, i) ->
       "#{vekyRelative[i] / stdMaxVek * 100}%"
-    tituly.splice 5, 1
+    sum = tituly.reduce do # fix chybejicich "jinych"
+      (prev, curr) -> prev + curr
+      0
+    tituly.push tituly[* - 1]
+    tituly[* - 2] = celkem - sum
+
     @genderFiller.style \width "#{zeny / celkem * 100}%"
     @titulFiller.style \width (d, i) -> "#{tituly[i] / celkem * 100}%"
 

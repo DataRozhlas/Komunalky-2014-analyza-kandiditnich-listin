@@ -4,7 +4,7 @@ document.body.appendChild mapElement
 window.ig.map = map = L.map do
   * mapElement
   * minZoom: 6,
-    maxZoom: 11,
+    maxZoom: 12,
     zoom: 7,
     center: [49.78, 15.5]
     maxBounds: [[48.4,11.8], [51.2,18.9]]

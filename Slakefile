@@ -181,6 +181,7 @@ copy-index = ->
 
 inject-index = (cb) ->
   require! child_process.exec
+  require! htmlmin: 'html-minifier'
   files =
     "#__dirname/www/_index.html"
     "#__dirname/www/script.js"
@@ -189,10 +190,18 @@ inject-index = (cb) ->
   index .= toString!
   index .= replace '<script src="script.js" charset="utf-8" async></script>', "<script>#{script.toString!}</script>"
   index .= replace '<link rel="stylesheet" href="screen.css">', "<style>#{style.toString!}</style>"
-  index .= replace /\n/g ''
+  htmlminConfig =
+    collapseWhitespace: 1
+    removeAttributeQuotes: 1
+    removeRedundantAttributes: 1
+    useShortDoctype: 1
+    minifyJS: 1
+    minifyCSS: 1
+  index = htmlmin.minify index, htmlminConfig
+  console.log index
   <~ fs.writeFile "#__dirname/www/index.html", index
   (err, stdout, stderr) <~ exec 'zopfli www/index.html'
-  console.log err, stderr
+  console.log err, stderr if err || stderr
   cb?!
 
 task \build ->

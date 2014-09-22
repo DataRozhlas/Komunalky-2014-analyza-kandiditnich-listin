@@ -15,7 +15,7 @@ for [id, nazev, status, ou_kod, ou_nazev, orp_kod, orp_nazev, okres_kod, okres_n
 (err, topo) <~ fs.readFile "#__dirname/../data/mapy.topo.json"
 topo = JSON.parse topo
 features = topojson.feature topo, topo.objects."data" .features
-# features.length = 1
+# features.length = 5
 (err, output) <~ async.mapLimit features, 10, (feature, cb) ->
   centroid = d3.geo.centroid feature
   # console.log centroid, feature.properties
@@ -43,21 +43,31 @@ features = topojson.feature topo, topo.objects."data" .features
     else
       obec_info = okresy_assoc['CZ0806']
 
-  line = (centroid.map (.toFixed 3)) ++ [feature.properties.ICZUJ, obec_info['okres_kod'], feature.properties.NAZMC || feature.properties.NAZOB]
+  [[w, s], [e, n]] = d3.geo.bounds feature
+  line = (centroid.map (.toFixed 3)) ++ [
+    parseInt feature.properties.ICZUJ, 10
+    obec_info['okres_kod']
+    feature.properties.NAZMC || feature.properties.NAZOB
+  ] ++ [w, s, e, n].map (.toFixed 3)
   feature.properties = {nazev: feature.properties.NAZMC || feature.properties.NAZOB}
 
-  <~ fs.writeFile do
-    "#__dirname/../data/suggester/geojsons/#{id}.geo.json"
-    JSON.stringify {type: 'FeatureCollection', features: [feature]}
-  cb null, line
 
+
+  # <~ fs.writeFile do
+  #   "#__dirname/../data/suggester/geojsons/#{id}.geo.json"
+  #   JSON.stringify {type: 'FeatureCollection', features: [feature]}
+  <~ process.nextTick
+  cb null, line
+output.sort (a, b) -> a.2 - b.2
 tsv = output.map (.join '\t') .join '\n'
-fs.writeFileSync "#__dirname/../data/suggester/obce_centroids.tsv" tsv
+# fs.writeFileSync "#__dirname/../data/suggester/obce_centroids_extents.tsv" tsv
 # console.log tsv
+
+# return
 
 okresy = for kod, {okres_kod, okres_nazev} of okresy_assoc
   [okres_kod, okres_nazev]
 okresy .= filter (.0)
 tsv_okresy = okresy.map (.join '\t') .join '\n'
-fs.writeFileSync "#__dirname/../data/suggester/okresy.tsv" tsv_okresy
-fs.writeFileSync "#__dirname/../data/suggester/okresy_obce.tsv" tsv_okresy + "\n\n" + tsv
+# fs.writeFileSync "#__dirname/../data/suggester/okresy.tsv" tsv_okresy
+fs.writeFileSync "#__dirname/../data/suggester/obce_centroids_extents.tsv" tsv_okresy + "\n\n" + tsv

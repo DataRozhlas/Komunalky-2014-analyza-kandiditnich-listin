@@ -43,10 +43,11 @@ if window.location.hash
     {lat, lon, nazev} = obec
     latlng = L.latLng [lat, lon]
     window.ig.map.setView latlng, 12
-    window.ig.showKandidatka iczuj, nazev
+    window.ig.showKandidatka iczuj, nazev, party
     queueIterations = 0
     checkQueue = ->
-      {data} = window.ig.utfgrid._objectForEvent {latlng: latlng}
+      try
+        {data} = window.ig.utfgrid._objectForEvent {latlng: latlng}
       if data
         window.ig.displayData data
       else

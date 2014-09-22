@@ -35,7 +35,7 @@ tableHeadings =
     filterable: 1
     name: "Strana"
 
-window.ig.showKandidatka = (obecId, obecName) ->
+window.ig.showKandidatka = (obecId, obecName, filterByParty = null) ->
   container.classed \kandidatka-active yes
   heading.html "Kandidátka obce #obecName"
   tableContainer.html ''
@@ -43,6 +43,8 @@ window.ig.showKandidatka = (obecId, obecName) ->
   dataTable = new window.ig.DataTable tableContainer, tableHeadings, obec
     ..on \data (filteredData) ->
       displaySubset obecName, filteredData.map (.data)
+  if filterByParty
+    dataTable.filterValues 5, filterByParty
 
 displaySubset = (obecName, data) ->
   nazev = obecName

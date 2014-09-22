@@ -27,7 +27,7 @@ labelLayer = L.tileLayer do
     opacity: 0.75
 
 displayedId = null
-grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
+window.ig.utfgrid = grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.json", useJsonP: no
   ..on \mouseover ({data}:e) ->
     displayedId := data?0
     window.ig.displayData data

@@ -33,8 +33,8 @@ setOutline = (iczuj) ->
   selectedOutline := L.geoJson data, style
     ..addTo window.ig.map
 
-if window.location.hash
-  [iczuj, party] = that.slice 1 .split '|'
+setView = (hash) ->
+  [iczuj, party] = hash.slice 1 .split '|'
   iczuj = parseInt iczuj, 10
   <~ suggester.downloadSuggestions
   obec = suggester.suggestions.filter (.id == iczuj) .0
@@ -54,3 +54,10 @@ if window.location.hash
         ++queueIterations
         setTimeout checkQueue, 100 if queueIterations < 100
     checkQueue!
+
+if window.location.hash
+  setView that
+
+window.onhashchange = ->
+  setView window.location.hash
+

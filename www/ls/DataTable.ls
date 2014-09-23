@@ -38,6 +38,7 @@ window.ig.DataTable = class DataTable
             else
               void
             that.filterValues index, value
+            that.emit 'filterChange' {headerField, index, value}
 
   prepareContent: ->
     @tbody = @table.append \tbody

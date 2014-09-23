@@ -46,6 +46,11 @@ window.ig.showKandidatka = (obecId, obecName, filterByParty = null) ->
   dataTable = new window.ig.DataTable tableContainer, tableHeadings, obec
     ..on \data (filteredData) ->
       displaySubset obecName, filteredData.map (.data)
+    ..on \filterChange ({index, value}) ->
+      return if index != 5
+      if window.top
+        window.top.location.hash = "#obecId|#value"
+
   if filterByParty
     dataTable.filterValues 5, filterByParty
   if window.top

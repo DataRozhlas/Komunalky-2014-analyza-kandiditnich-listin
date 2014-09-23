@@ -35,7 +35,7 @@ window.ig.utfgrid = grid = new L.UtfGrid "../data/tiles/meta-2014/{z}/{x}/{y}.js
     return unless data
     return unless data.2
     if displayedId == data.0
-      window.ig.showKandidatka ...data
+      window.ig.showKandidatka data[0], data[1]
     else
       window.ig.displayData data
       displayedId := data.0

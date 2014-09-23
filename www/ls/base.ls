@@ -35,9 +35,11 @@ setOutline = (iczuj) ->
 
 setView = (hash) ->
   [iczuj, party] = hash.slice 1 .split '|'
+  return unless iczuj.length
   iczuj = parseInt iczuj, 10
   <~ suggester.downloadSuggestions
   obec = suggester.suggestions.filter (.id == iczuj) .0
+  return unless obec
   if obec
     setOutline iczuj
     {lat, lon, nazev} = obec

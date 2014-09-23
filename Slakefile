@@ -198,7 +198,6 @@ inject-index = (cb) ->
     minifyJS: 1
     minifyCSS: 1
   index = htmlmin.minify index, htmlminConfig
-  console.log index
   <~ fs.writeFile "#__dirname/www/index.html", index
   (err, stdout, stderr) <~ exec 'zopfli www/index.html'
   console.log err, stderr if err || stderr

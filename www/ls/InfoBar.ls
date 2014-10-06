@@ -23,6 +23,7 @@ window.ig.InfoBar = class InfoBar
       else
         @helpText.html "Vojenský újezd"
       celkem = 1
+      celkemFalse = true
     else
       @helpText.html "Kliknutím do mapy zobrazíte detail kandidátky"
     vekyRelative = veky.map -> it / celkem
@@ -43,6 +44,8 @@ window.ig.InfoBar = class InfoBar
       0
     tituly.push tituly[* - 1]
     tituly[* - 2] = celkem - sum
+    if celkemFalse
+      tituly[* - 2] = 0
 
     @genderFiller.style \width "#{zeny / celkem * 100}%"
     @titulFiller.style \width (d, i) -> "#{tituly[i] / celkem * 100}%"

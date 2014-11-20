@@ -13,3 +13,5 @@ Mapa všech obcí, jejich kandidátek, poměru kandidátů a mandátů a analýz
     slake deploy
 
 Hlavní stránka je v www/index.html
+
+Mapové dlaždice jsou generovány z SVG v adresáři data pomocí [SVG Mapperu](https://github.com/economia/svg-mapper).
